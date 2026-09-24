@@ -1,6 +1,8 @@
 # Agentic AI — Materials Intelligence
 
-Multi-agent system for steel axle fracture questions. Deterministic tools return the numbers. The language model only writes the answer from those tool results.
+A case desk for steel axle fractures. Give it a hardness value, a heat-treatment question, or an SEM image and it works the case through to a decision: how the axle is likely to fail, which process step is driving that, and what to verify next on the line.
+
+The answer is not a pile of tool output. Standards, the process graph, the fracture model, the SEM classifier, and the motor session are brought onto one case. If two signals disagree, the case says so, then still closes with a recommendation an engineer can use.
 
 **Live demo:** [https://d1odeaab3kt4gn.cloudfront.net](https://d1odeaab3kt4gn.cloudfront.net)
 
@@ -10,17 +12,22 @@ Multi-agent system for steel axle fracture questions. Deterministic tools return
 
 Deployed on AWS ECS Fargate behind CloudFront, region `eu-central-1` (Frankfurt).
 
-## What it does
+## How a case is closed
 
-| Agent | Tool | Job |
-|---|---|---|
-| Standards | `search_iso_standards` | FAISS search over ISO/DIN text |
-| Knowledge | `query_knowledge_graph` | Process links: heat treatment, hardness, fracture, SEM |
-| Fracture | `predict_axle_fracture` | Ridge model for ductile % and brittle % from HV10 |
-| Vision | `classify_sem_image` | U-Net pixel split of an SEM fracture image |
-| Vision | `estimate_hv10_from_sem` | HV10 range from the SEM ductile % |
-| Twin | `assess_motor_session` | Plant motor session check |
-| Critic | `detect_conflict` | Flags when axle and SEM brittle % disagree |
+1. The question is sent only to the specialists that case needs.
+2. Each specialist returns a result the case can stand on: the relevant standard, the heat-treatment path, ductile and brittle share, the SEM split, an HV10 band, and the motor session.
+3. Those results are written as one engineering answer: what is happening, why the process produced it, and the next check. Higher tempering temperature lowers hardness and raises ductility; the case follows that, it does not invent a second story.
+
+## Specialists on the case
+
+| Specialist | What it settles |
+|---|---|
+| Standards | The ISO/DIN clause that governs the question |
+| Knowledge | Heat treatment, hardness, fracture mode, and SEM, linked as one process |
+| Fracture | Ductile % and brittle % from HV10 |
+| Vision | Ductile versus brittle area on the SEM image, then an HV10 band from that split |
+| Twin | Whether this plant motor session is inside its normal window |
+| Critic | A clear flag when the axle model and the SEM do not agree |
 
 ## Run locally
 
