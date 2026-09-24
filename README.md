@@ -1,8 +1,10 @@
 # Agentic AI — Materials Intelligence
 
-A case desk for steel axle fractures. Give it a hardness value, a heat-treatment question, or an SEM image and it works the case through to a decision: how the axle is likely to fail, which process step is driving that, and what to verify next on the line.
+A case desk for materials science. Bring a defect, a fracture, a failed part, or a property you need predicted, and the desk works that case through to a decision: what kind of failure this is, which process step is driving it, and what to verify next.
 
-The answer is not a pile of tool output. Standards, the process graph, the fracture model, the SEM classifier, and the motor session are brought onto one case. If two signals disagree, the case says so, then still closes with a recommendation an engineer can use.
+It covers materials problems, not one question type. Surface defects, fracture mode, heat treatment, hardness, and property prediction sit on the same case. Standards, the process graph, the prediction model, and the microscope image are read together. If two signals disagree, the case says so, then still closes with a recommendation an engineer can use.
+
+This repository runs that desk on hardened axle steel: HV10, ductile and brittle share, SEM fracture surfaces, and the plant motor session.
 
 **Live demo:** [https://d1odeaab3kt4gn.cloudfront.net](https://d1odeaab3kt4gn.cloudfront.net)
 
@@ -14,7 +16,7 @@ Deployed on AWS ECS Fargate behind CloudFront, region `eu-central-1` (Frankfurt)
 
 ## How a case is closed
 
-1. The question is sent only to the specialists that case needs.
+1. A defect, fracture, or property question is sent only to the specialists that case needs.
 2. Each specialist returns a result the case can stand on: the relevant standard, the heat-treatment path, ductile and brittle share, the SEM split, an HV10 band, and the motor session.
 3. Those results are written as one engineering answer: what is happening, why the process produced it, and the next check. Higher tempering temperature lowers hardness and raises ductility; the case follows that, it does not invent a second story.
 
