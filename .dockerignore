@@ -1,0 +1,17 @@
+venv
+.venv
+__pycache__
+*.pyc
+.git
+.agents
+ISO_DIN standards_Thesis_Documents
+SEM_Images
+notebooks
+*.ipynb
+.env
+models/*_optimized.pkl
+models/*.png
+sem_output/**
+!sem_output/models/
+!sem_output/models/sem_classifier_final.pth
+

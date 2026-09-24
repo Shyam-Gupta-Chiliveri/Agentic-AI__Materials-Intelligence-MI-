@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.env
+.venv/
+venv/
+shyamvenv/
+.DS_Store
+.pytest_cache/
+*.pkl
+!faiss_index_local/index.pkl
+*.pth
+*.pt
+models/
+sem_output/

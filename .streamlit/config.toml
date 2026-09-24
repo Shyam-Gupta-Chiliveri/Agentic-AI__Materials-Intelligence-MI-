@@ -1,0 +1,39 @@
+[theme]
+base = "light"
+primaryColor = "#d97757"
+linkColor = "#d97757"
+baseRadius = "large"
+buttonRadius = "large"
+showWidgetBorder = true
+showSidebarBorder = true
+font = "'IBM Plex Sans':https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+
+[theme.light]
+primaryColor = "#d97757"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f5f5f0"
+textColor = "#1a1a1a"
+borderColor = "#e5e5e0"
+linkColor = "#c45c3a"
+
+[theme.light.sidebar]
+backgroundColor = "#f7f6f2"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#1a1a1a"
+borderColor = "#e8e4dc"
+primaryColor = "#d97757"
+
+[theme.dark]
+primaryColor = "#d97757"
+backgroundColor = "#0f1117"
+secondaryBackgroundColor = "#161b27"
+textColor = "#e8eaf0"
+borderColor = "#2d3548"
+linkColor = "#e8a07c"
+
+[theme.dark.sidebar]
+backgroundColor = "#12151e"
+secondaryBackgroundColor = "#1a1f2e"
+textColor = "#e8eaf0"
+borderColor = "#2d3548"
+primaryColor = "#d97757"
