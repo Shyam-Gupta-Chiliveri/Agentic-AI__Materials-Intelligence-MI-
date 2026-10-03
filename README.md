@@ -6,7 +6,7 @@ It covers materials problems, not one question type. Surface defects, fracture m
 
 This repository runs that desk on hardened axle steel: HV10, ductile and brittle share, SEM fracture surfaces, and the plant motor session.
 
-**Live demo:** [https://138.2.179.154.sslip.io](https://138.2.179.154.sslip.io))
+**Live demo:** [https://138.2.179.154.sslip.io](https://138.2.179.154.sslip.io)
 
 **Phases 1–4** (EDA, machine learning, SEM U-Net, RAG) are in a separate repository:
 
