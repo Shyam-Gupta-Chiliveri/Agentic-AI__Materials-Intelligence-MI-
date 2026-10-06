@@ -13,6 +13,7 @@ This repository runs that desk on hardened axle steel: HV10, ductile and brittle
 | Agentic AI | [https://138.2.179.154.sslip.io](https://138.2.179.154.sslip.io) |
 | SEM classifier | [https://sem.138.2.179.154.sslip.io](https://sem.138.2.179.154.sslip.io) |
 | RAG | [https://rag.138.2.179.154.sslip.io](https://rag.138.2.179.154.sslip.io) |
+| Grafana (Kubernetes monitoring) | [https://grafana.138.2.179.154.sslip.io](https://grafana.138.2.179.154.sslip.io) |
 
 **Phases 1–4** (EDA, machine learning, SEM U-Net, RAG) are in a separate repository:
 
@@ -72,3 +73,8 @@ deploy/aws/     CloudFormation + deploy script
 faiss_index_local/   standards index
 data/motor/     plant motor session summaries
 ```
+
+
+## Platform (Terraform + Kubernetes)
+
+The three apps run on **k3s** with Prometheus and Grafana. IaC lives in [`deploy/platform`](deploy/platform).

@@ -1,0 +1,179 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agentic
+  namespace: materials
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agentic
+  template:
+    metadata:
+      labels:
+        app: agentic
+    spec:
+      containers:
+        - name: app
+          image: docker.io/library/materials-agent:latest
+          imagePullPolicy: Never
+          command: ["streamlit"]
+          args:
+            - run
+            - apps/agentic_materials_app.py
+            - --server.port=8080
+            - --server.address=0.0.0.0
+            - --server.enableCORS=false
+            - --server.enableXsrfProtection=false
+          ports:
+            - containerPort: 8080
+          env:
+            - name: GROQ_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: groq
+                  key: GROQ_API_KEY
+          readinessProbe:
+            httpGet:
+              path: /_stcore/health
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agentic
+  namespace: materials
+spec:
+  type: NodePort
+  selector:
+    app: agentic
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sem
+  namespace: materials
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sem
+  template:
+    metadata:
+      labels:
+        app: sem
+    spec:
+      containers:
+        - name: app
+          image: docker.io/library/materials-agent:latest
+          imagePullPolicy: Never
+          command: ["streamlit"]
+          args:
+            - run
+            - apps/image_classifier_app.py
+            - --server.port=8080
+            - --server.address=0.0.0.0
+            - --server.enableCORS=false
+            - --server.enableXsrfProtection=false
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /_stcore/health
+              port: 8080
+            initialDelaySeconds: 25
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: 768Mi
+              cpu: 250m
+            limits:
+              memory: 3Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sem
+  namespace: materials
+spec:
+  type: NodePort
+  selector:
+    app: sem
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30082
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag
+  namespace: materials
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rag
+  template:
+    metadata:
+      labels:
+        app: rag
+    spec:
+      containers:
+        - name: app
+          image: docker.io/library/materials-agent:latest
+          imagePullPolicy: Never
+          command: ["streamlit"]
+          args:
+            - run
+            - apps/materials_rag_streamlit_app.py
+            - --server.port=8080
+            - --server.address=0.0.0.0
+            - --server.enableCORS=false
+            - --server.enableXsrfProtection=false
+          ports:
+            - containerPort: 8080
+          env:
+            - name: GROQ_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: groq
+                  key: GROQ_API_KEY
+          readinessProbe:
+            httpGet:
+              path: /_stcore/health
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rag
+  namespace: materials
+spec:
+  type: NodePort
+  selector:
+    app: rag
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30083
