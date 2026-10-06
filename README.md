@@ -6,13 +6,19 @@ It covers materials problems, not one question type. Surface defects, fracture m
 
 This repository runs that desk on hardened axle steel: HV10, ductile and brittle share, SEM fracture surfaces, and the plant motor session.
 
-**Live demo:** [https://138.2.179.154.sslip.io](https://138.2.179.154.sslip.io)
+**Live demos**
+
+| App | URL |
+|---|---|
+| Agentic AI | [https://138.2.179.154.sslip.io](https://138.2.179.154.sslip.io) |
+| SEM classifier | [https://sem.138.2.179.154.sslip.io](https://sem.138.2.179.154.sslip.io) |
+| RAG | [https://rag.138.2.179.154.sslip.io](https://rag.138.2.179.154.sslip.io) |
 
 **Phases 1–4** (EDA, machine learning, SEM U-Net, RAG) are in a separate repository:
 
 [AI-based material analysis system with multimodal learning](https://github.com/Shyam-Gupta-Chiliveri/AI-based-material-analysis-system-with-multimodal-learning)
 
-Deployed on AWS ECS Fargate behind CloudFront, region `eu-central-1` (Frankfurt).
+Hosted on Oracle Cloud Always Free (Frankfurt).
 
 ## How a case is closed
 
