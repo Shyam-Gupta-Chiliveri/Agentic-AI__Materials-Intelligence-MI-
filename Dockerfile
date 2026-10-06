@@ -4,6 +4,7 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libgomp1 \
+        libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements-agent.txt .
@@ -14,6 +15,7 @@ COPY apps/ apps/
 COPY .streamlit/ .streamlit/
 COPY data/motor/ data/motor/
 COPY faiss_index_local/ faiss_index_local/
+COPY Dimples_with_Ductility.png Cleavages_with_Brittleness.jpg ./
 
 # Only the small axle models the agent loads (skip 1.3 GB unused pickles).
 COPY models/best_ductility_model.pkl models/best_brittleness_model.pkl \

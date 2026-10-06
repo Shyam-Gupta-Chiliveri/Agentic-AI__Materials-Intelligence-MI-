@@ -1,0 +1,39 @@
+# Three separate containers from the same image.
+# The default image CMD stays the agentic app.
+services:
+  agent:
+    image: materials-agent:latest
+    container_name: materials-app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY}
+    command: >
+      streamlit run apps/agentic_materials_app.py
+      --server.port=8080 --server.address=0.0.0.0
+      --server.enableCORS=false --server.enableXsrfProtection=false
+
+  sem:
+    image: materials-agent:latest
+    container_name: sem-app
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8502:8080"
+    command: >
+      streamlit run apps/image_classifier_app.py
+      --server.port=8080 --server.address=0.0.0.0
+      --server.enableCORS=false --server.enableXsrfProtection=false
+
+  rag:
+    image: materials-agent:latest
+    container_name: rag-app
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8503:8080"
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY}
+    command: >
+      streamlit run apps/materials_rag_streamlit_app.py
+      --server.port=8080 --server.address=0.0.0.0
+      --server.enableCORS=false --server.enableXsrfProtection=false

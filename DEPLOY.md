@@ -10,9 +10,18 @@ streamlit run apps/agentic_materials_app.py --server.port 8505
 
 ## Docker
 
+Three **separate** containers share one image. Each app has its own process and URL.
+
 ```bash
-docker build --platform linux/amd64 -t materials-agent .
-docker run -p 8080:8080 --env-file .env materials-agent
+docker build --platform linux/arm64 -t materials-agent:latest .
+# Agentic AI (default CMD)
+docker run -d --name materials-app --restart unless-stopped -p 8080:8080 --env-file .env materials-agent:latest
+# SEM classifier
+docker run -d --name sem-app --restart unless-stopped -p 127.0.0.1:8502:8080 materials-agent:latest \
+  streamlit run apps/image_classifier_app.py --server.port=8080 --server.address=0.0.0.0 --server.enableCORS=false --server.enableXsrfProtection=false
+# RAG
+docker run -d --name rag-app --restart unless-stopped -p 127.0.0.1:8503:8080 --env-file .env materials-agent:latest \
+  streamlit run apps/materials_rag_streamlit_app.py --server.port=8080 --server.address=0.0.0.0 --server.enableCORS=false --server.enableXsrfProtection=false
 ```
 
 The image copies FAISS, motor summaries, the small axle `.pkl` models, and `sem_classifier_final.pth`. The 1.3 GB unused `*_optimized.pkl` files stay out.
